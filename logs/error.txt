@@ -1,1 +1,2 @@
 20230920	15:30:33	c95cdb8d-0374-4b1c-8f16-efa570630218	Error: Not allowed by CORS
+20230920	15:55:45	7f8bd491-9f98-4210-957e-b19dd4f99dab	Error: ENOENT: no such file or directory, stat '/home/ruknology/Desktop/Express/express-tutorial/routes/views/new-page.html'

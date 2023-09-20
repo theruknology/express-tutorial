@@ -12,7 +12,6 @@ app.use(logger);
 
 // Cross origin resource sharing
 const whitelist = ["http://127.0.0.1:5500", "http://localhost:3500"];
-
 const corsOptions = {
   origin: (origin, callback) => {
     if (whitelist.indexOf(origin) !== -1 || !origin) {
@@ -23,38 +22,21 @@ const corsOptions = {
   },
   optionsSuccessStatus: 200,
 };
-
 app.use(cors(corsOptions));
 
 // Form data from URL encoded
 app.use(express.urlencoded({ extended: false }));
+
+// built in middleware for handling json
 app.use(express.json());
 
-app.use(express.static(path.join(__dirname, "/public")));
+// Serving static files
+app.use("/", express.static(path.join(__dirname, "/public")));
+app.use("/subdir", express.static(path.join(__dirname, "/public")));
 
-app.get("^/$|index(.html)?", (req, res) => {
-  res.sendFile(path.join(__dirname, "views", "index.html"));
-});
-
-app.get("/new", (req, res) => {
-  res.sendFile(path.join(__dirname, "views", "new-page.html"));
-});
-
-// Route Handler
-app.get(
-  "/hello(.html)?",
-  (req, res, next) => {
-    console.log("attempted to load hello");
-    next();
-  },
-  (req, res) => {
-    res.send("Hello To the other side");
-  }
-);
-
-app.get("/old", (req, res) => {
-  res.redirect(301, "/new");
-});
+app.use("/", require("./routes/root"));
+app.use("/subdir", require("./routes/subdir"));
+app.use("/employees", require("./routes/api/employees"));
 
 app.all("*", (req, res) => {
   res.status(404);
