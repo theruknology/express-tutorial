@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const cors = require("cors");
+const corsOptions = require("./config/corsOptions");
 const { logger } = require("./middleware/logEvents");
 const errorHandler = require("./middleware/errorHandler");
 
@@ -10,18 +11,6 @@ const PORT = process.env.PORT || 3500;
 // custom middleware logger
 app.use(logger);
 
-// Cross origin resource sharing
-const whitelist = ["http://127.0.0.1:5500", "http://localhost:3500"];
-const corsOptions = {
-  origin: (origin, callback) => {
-    if (whitelist.indexOf(origin) !== -1 || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  optionsSuccessStatus: 200,
-};
 app.use(cors(corsOptions));
 
 // Form data from URL encoded
@@ -32,12 +21,13 @@ app.use(express.json());
 
 // Serving static files
 app.use("/", express.static(path.join(__dirname, "/public")));
-app.use("/subdir", express.static(path.join(__dirname, "/public")));
 
 app.use("/", require("./routes/root"));
-app.use("/subdir", require("./routes/subdir"));
+app.use("/register", require("./routes/register"));
+app.use("/auth", require("./routes/auth"));
 app.use("/employees", require("./routes/api/employees"));
 
+// Final step in waterfall
 app.all("*", (req, res) => {
   res.status(404);
   if (req.accepts("html")) {

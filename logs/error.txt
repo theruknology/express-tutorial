@@ -1,2 +1,4 @@
 20230920	15:30:33	c95cdb8d-0374-4b1c-8f16-efa570630218	Error: Not allowed by CORS
 20230920	15:55:45	7f8bd491-9f98-4210-957e-b19dd4f99dab	Error: ENOENT: no such file or directory, stat '/home/ruknology/Desktop/Express/express-tutorial/routes/views/new-page.html'
+20230921	10:37:41	6be7d0fa-1124-4060-b315-77a70c27fe14	SyntaxError: Expected double-quoted property name in JSON at position 49
+20230926	22:58:27	360d0430-9b4e-4d18-9089-73aed36516d8	SyntaxError: Expected double-quoted property name in JSON at position 27
